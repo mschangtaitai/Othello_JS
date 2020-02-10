@@ -1,4 +1,4 @@
-import flatten from 'lodash/flatten'; 
+import flatten from './lodash/flatten'; 
 
 const verifyUp = ({
     rowIndex,
@@ -408,16 +408,6 @@ const renderCell = ({
             verifySecondDiagDown({rowIndex,columnIndex,state,changes});
             changes.forEach(change => state.matriz[change[0]][change[1]] = (state.turn) ? -1 : 1 );
 
-            winner = verifyWinner(state)
-            if (winner === -1){
-                console.log('The winner is white')
-            }
-            else if (winner === 1){
-                console.log('The winner is black')
-            }
-            else if (winner === 0){
-                console.log('Draw')
-            }
             console.log(changes);
             state.turn = !state.turn
         }
@@ -451,6 +441,25 @@ const render = (mount, state) => {
         board.appendChild(rowDiv);
         }
     );
+
+    const winnerDiv = Document.createElement('h1')
+            winner = verifyWinner(state)
+            if (winner === -1){
+                winnerDiv.text = 'The winner is white';
+                console.log('The winner is white')
+            }
+            else if (winner === 1){
+                winnerDiv.text = 'The winner is black';
+                console.log('The winner is black')
+            }
+            else if (winner === 0){
+                winnerDiv.text = 'Draw';
+                console.log('Draw')
+            }
+            else {
+                winnerDiv.text = 'Still Playing';
+            }
+            board.appendChild(winnerDiv);
 
     mount.appendChild(board);
 };
